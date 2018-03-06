@@ -1,0 +1,29 @@
+body {
+  background: #1e2440;
+  color: #f2efe2;
+  font-size: 16px;
+  font-family: 'Kaushan Script', cursive;
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.container {
+  border: 1px solid #f2efe2;
+  width: 60vw;
+  max-width: 60vw;
+  margin: 0 auto;
+  border-radius: 0.1rem;
+  background: #f2efe2;
+  padding: 0.2rem 1rem;
+  color: #1e2440;
+  max-height: 85vh;
+  overflow: scroll;
+}
+
+.container:focus {
+  outline: none;
+}
+
+.container p {
+  border-bottom: 1px dotted black;
+  margin: 0px !important;
+}
