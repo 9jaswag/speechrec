@@ -7,23 +7,43 @@ body {
 }
 
 .container {
+  position: relative;
   border: 1px solid #f2efe2;
-  width: 60vw;
+  width: 40vw;
   max-width: 60vw;
   margin: 0 auto;
   border-radius: 0.1rem;
   background: #f2efe2;
   padding: 0.2rem 1rem;
   color: #1e2440;
-  max-height: 85vh;
   overflow: scroll;
 }
 
-.container:focus {
+.text-box {
+  max-height: 70vh;
+  overflow: scroll;
+}
+
+.text-box:focus {
   outline: none;
 }
 
-.container p {
+.text-box p {
   border-bottom: 1px dotted black;
   margin: 0px !important;
+}
+
+.fa {
+  color: white;
+  background: #1e2440;
+  /* padding: 0.3rem 0.5rem; */
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: 1rem;
+  float: right;
+  width: 2rem;
+  height: 2rem;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
