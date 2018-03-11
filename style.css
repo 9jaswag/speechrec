@@ -48,6 +48,29 @@ body {
   justify-content: center;
 }
 
+@media (max-width: 768px) {
+  .container {
+    width: 85vw;
+    max-width: 85vw;
+  }
+
+  .text-box {
+    max-height: 55vh;
+  }
+
+  select {
+    width: 70vw !important;
+    padding: 3px 35px 5px 5px;
+    background: url('./blek pentha.png') 96% / 13% no-repeat #eee !important;
+  }
+}
+
+@media (width: 768px) {
+  select {
+    background: url('./blek pentha.png') 96% / 7% no-repeat #eee !important;
+  }
+}
+
 select {
   width: 22vw;
   padding: 5px 35px 5px 5px;
