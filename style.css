@@ -17,6 +17,7 @@ body {
   padding: 0.2rem 1rem;
   color: #1e2440;
   overflow: scroll;
+  margin-top: 10vh;
 }
 
 .text-box {
@@ -36,7 +37,6 @@ body {
 .fa {
   color: white;
   background: #1e2440;
-  /* padding: 0.3rem 0.5rem; */
   border-radius: 50%;
   cursor: pointer;
   margin-top: 1rem;
@@ -47,3 +47,26 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+select {
+  width: 22vw;
+  padding: 5px 35px 5px 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  height: 34px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url('./blek pentha.png') 96% / 15% no-repeat #eee;
+  font-family: 'Kaushan Script', cursive;
+  font-family: 'Shadows Into Light', cursive;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 1vh;
+  border-radius: 1rem;
+}
+
+select:focus, select:active {
+  outline: none;
+}
+

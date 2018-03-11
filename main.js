@@ -1,3 +1,6 @@
+// if (!('webkitSpeechRecognition' in window)) {
+//   alert('get yourself a proper browser');
+// }
 window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 // recognition.continuous = true;
@@ -11,6 +14,7 @@ let container = document.querySelector('.text-box');
 const sound = document.querySelector('.sound');
 container.appendChild(paragraph);
 let listening = false;
+let question = false;
 
 recognition.onstart = function() {
   listening = true;
@@ -23,6 +27,7 @@ recognition.onend = function() {
 
 const dictate = () => {
   console.log('dictating');
+  recognition.start();
   recognition.onresult = (event) => {
     const speechToText = Array.from(event.results)
     .map(result => result[0])
@@ -45,14 +50,27 @@ const dictate = () => {
       };
 
       if (speechToText.includes('what is the weather in')) {
-        // speak(getTheWeather)
         getTheWeather(speechToText);
+      };
+
+      if (speechToText.includes('open a url')) {
+        utterThis = new SpeechSynthesisUtterance('what URL do you want to open?');
+        synth.speak(utterThis);
+        recognition.abort();
+        recognition.stop();
+        question = true;
+        return;
+      };
+
+      if (speechToText.includes('open') && question) {
+        openUrl(speechToText.split(' ')[1]);
+        question = false;
       };
     }
   };
 
   recognition.onend = recognition.start
-  recognition.start();
+  // recognition.start();
 };
 
 const getTime = () => {
@@ -70,16 +88,32 @@ const getTheWeather = (speech) => {
   .then(function(response){
     return response.json();
   }).then(function(weather){
+    if (weather.cod === '404') {
+      utterThis = new SpeechSynthesisUtterance(`I cannot find the weather for ${speech.split(' ')[5]}`);
+      setVoice(utterThis);
+      synth.speak(utterThis);
+      return
+    }
     utterThis = new SpeechSynthesisUtterance(`the weather condition in ${weather.name} is mostly full of
     ${weather.weather[0].description} at a temperature of ${weather.main.temp} degrees Celcius`);
+    setVoice(utterThis);
     synth.speak(utterThis);
   });
 };
 
 const speak = (action) => {
   utterThis = new SpeechSynthesisUtterance(action());
+  setVoice(utterThis);
   synth.speak(utterThis);
 };
+
+const openUrl = (url) => {
+  window.open(`http://${url}`,'_newtab');
+};
+
+const stripUrl = (str) =>  {
+	return str.match(/[a-z]+[:.].*?(?=\s)/);
+}
 
 icon.addEventListener('click', () => {
   if (listening) {
@@ -89,3 +123,38 @@ icon.addEventListener('click', () => {
   sound.play();
   dictate();
 });
+
+function populateVoiceList() {
+  if(typeof speechSynthesis === 'undefined') {
+    return;
+  }
+
+  voices = speechSynthesis.getVoices();
+
+  for(i = 0; i < voices.length ; i++) {
+    var option = document.createElement('option');
+    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+    
+    if(voices[i].default) {
+      option.textContent += ' -- DEFAULT';
+    }
+
+    option.setAttribute('data-lang', voices[i].lang);
+    option.setAttribute('data-name', voices[i].name);
+    document.getElementById("voiceSelect").appendChild(option);
+  }
+}
+
+populateVoiceList();
+if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+const setVoice = (utterThis) => {
+  const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+  for(i = 0; i < voices.length ; i++) {
+    if(voices[i].name === selectedOption) {
+      utterThis.voice = voices[i];
+    }
+  }
+};
