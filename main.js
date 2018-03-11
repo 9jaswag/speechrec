@@ -55,6 +55,7 @@ const dictate = () => {
 
       if (speechToText.includes('open a url')) {
         utterThis = new SpeechSynthesisUtterance('what URL do you want to open?');
+        setVoice(utterThis);
         synth.speak(utterThis);
         recognition.abort();
         recognition.stop();
