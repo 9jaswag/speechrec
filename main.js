@@ -151,7 +151,7 @@ class App {
 
   getWeather(speech) {
     self = this;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${speech.split(' ')[5]}&appid=6aa90859f3e957ff6c77ec9b1bc86296&units=metric`
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${speech.split(' ')[5]}&appid=6aa90859f3e957ff6c77ec9b1bc86296&units=metric`
     if ('caches' in window) {
       /*
        * Check if the service worker has already cached this city's weather
